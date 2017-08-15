@@ -3,9 +3,13 @@
 /*
   READ ME
 
-  USE: box-sizing: border-box; & html { overflow: hidden; } (safari bug fix),
+  USE: box-sizing: border-box;
+  html { overflow: hidden; } (safari bug fix),
   img { display: block; },
   copy & paste all CSS within 'Image Slider' comments
+
+  -webkit-overflow-scrolling: touch; 
+  Momentum-based scrolling, where the content continues to scroll for a while after finishing the scroll gesture and removing your finger from the touchscreen.
 
   then see read me below
 */

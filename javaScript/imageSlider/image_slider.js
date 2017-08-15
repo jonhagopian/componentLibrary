@@ -1,53 +1,63 @@
 // See read me in styles.css
 /*
   READ ME
-  imageSlider() is a standard function declaration, defined when executed via DOMContentLoaded.
-  slideAnimation() only accessible from within imageSlider().
-  If window is wider than total width of all slides function justifies slides and does not apply animation
+  imageSlider() run via 'load' event.
+  If window is wider than total width of all slides function justifies slides without animation.
   Animation is percentage based.
 
-  To slow or speed image lag see: slidePosPct = slidePosPct * 0.XX, 1 is full, 0 none
+  current slide center, distance from SCROLLER container left side
+  current slide center position IN CONTAINER
+  convert to percentage, this is the value to move images within slide right
+  move image to center using 1/2 image width which is 50%
+
+  To slow or speed image lag see: sPosPct = sPosPct * 0.XX, 1 is full, 0 none
 
   Images should be large enough to fill lag distance within slide
 
-  Future additions: Add scroll stop then move image closest to center to center with 'transition-duration.'
+  Future additions: Previous/Next buttons for desktop.
+
+  Variable:
+  box = the parent container block containing scrolling gallery
+  s0 = basic slide
+  sW = slide width
+  sF = slide dimensions plus margin right
+  sArr = array, all slides within the box
+
+  boxW = box width
+  scrPos = scroll position (position box is scrolled from TL zero)
+  sPos = current slide position in box
+  sPosVis = current slide position in visible portion of box
+  sPosPct = convert position to percent
 */
+// Image Slider 
 function imageSlider() {
-  var imageSlider = document.getElementById('image_slider');
-  var firstSlide = imageSlider.getElementsByTagName('div')[0];
-  var slideWidth = firstSlide.offsetWidth;
-  var slideMarWidth = parseInt(getComputedStyle(firstSlide).marginRight);
-  var fullSlideWidth = slideWidth + slideMarWidth;
-  var slideMarginRight = parseInt(getComputedStyle(firstSlide).marginRight);
-  var imageSlidesArray = document.getElementsByClassName('image_slide');
-  var imageWidth = firstSlide.getElementsByTagName('img')[0].offsetWidth;
-  function slideAnimation() {
-    var imageSliderWidth = imageSlider.offsetWidth;
-    var scrollPos = imageSlider.scrollLeft;
-    if (fullSlideWidth * (imageSlidesArray.length - 1) <= imageSliderWidth ) {
+  var box = document.getElementById('image_slider');
+  var s0 = box.getElementsByTagName('div')[0];
+  var sW = s0.offsetWidth;
+  var sF = sW + parseInt(getComputedStyle(s0).marginRight);
+  var sArr = document.getElementsByClassName('image_slide');
+  function sAnimate() {
+    var boxW = box.offsetWidth;
+    var scrPos = box.scrollLeft;
+    if (sF * (sArr.length - 1) <= boxW ) {
       image_slider.setAttribute('class','justified');
     } else {
-      for (var i = 0; i < imageSlidesArray.length; i++) {
-        var slide = imageSlidesArray[i];
-        //current slides center, distance from SCROLLER containers left side
-        var slidePos = Math.round(imageSlidesArray[i].offsetLeft + (fullSlideWidth / 2) );
-        //current slides center position IN CONTAINER
-        var slidePosIn = scrollPos - slidePos;
-        //convert to percentage, this is value to move images within slide right
-        var slidePosPct = Math.round((slidePosIn / imageSliderWidth) * 100);
-        //move image to center using 1/2 image width which is 50%
-        slidePosPct = slidePosPct + 50;
-        //finally... SLOW down image movement by cutting down slide pos percentage
-        slidePosPct = slidePosPct * 0.20;
-        moveMe = slidePosPct;
-        imageSlidesArray[i].getElementsByTagName('img')[0].style.transform = 'translateX(' + moveMe + '%)';
+      for (var i = 0; i < sArr.length; i++) {
+        var sPos = Math.round(sArr[i].offsetLeft + (sF / 2) );
+        var sPosVis = scrPos - sPos;
+        var sPosPct = Math.round((sPosVis / boxW) * 100);
+        sPosPct = sPosPct + 50;
+        sPosPct = sPosPct * 0.20; // slow image movement by reducing this %
+        sArr[i].getElementsByTagName('img')[0].style.transform = 'translateX(' + sPosPct + '%)';
       }
     }
   }
-  imageSlider.addEventListener('scroll', slideAnimation);
+  box.addEventListener('scroll', sAnimate);
+  sAnimate();
 }; //EOF
-//initialize image slider, call function when DOMContentLoaded
-window.document.addEventListener('DOMContentLoaded', imageSlider);
-//initialize image slider if window resized or orientation change
-window.document.addEventListener('onresize', imageSlider);
-window.document.addEventListener('orientationchange', imageSlider);
+//init slider
+window.addEventListener('load', imageSlider);
+//re-init slider
+window.addEventListener('resize', imageSlider);
+window.addEventListener('orientationchange', imageSlider);
+// End Image Slider
