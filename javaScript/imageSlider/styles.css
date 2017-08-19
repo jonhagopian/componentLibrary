@@ -30,17 +30,20 @@ body {
 img {
   display: block;
 }
+section {
+  margin: 1em 0;
+}
 /* End General Styles */
 
 /*
   READ ME
-  Use CSS below and adjust width, padding of #image_slider
-  & height, width, border-radius, border of #image_slider .image_slide 
-  & margin-left and width of #image_slider .image_slide 
+  Use CSS below and adjust width, padding of .image_slider
+  & height, width, border-radius, border of .image_slider .image_slide 
+  & margin-left and width of .image_slider .image_slide 
 */
 
 /* Image Slider */
-#image_slider {
+.image_slider {
   width: 100%;
   padding: 0;
   display: flex;
@@ -48,13 +51,14 @@ img {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 }
-#image_slider.justified {
+.image_slider.justified {
   /*justify-content: center; added via JS */ 
   justify-content: center;
 }
-#image_slider .image_slide {
+.image_slider .image_slide {
   width: 200px;
   height: 150px;
   margin-right: 1em;
@@ -63,7 +67,7 @@ img {
   overflow: hidden;
   flex: 0 0 auto;
 }
-#image_slider .image_slide  img {
+.image_slider .image_slide  img {
   /* negative margin matches amount over 100% / 2 */
   margin-left: -14%;
   width: 128%;

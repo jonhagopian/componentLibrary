@@ -1,6 +1,7 @@
 // See read me in styles.css
 /*
   READ ME
+  Multiple instances of slider may exist.
   imageSlider() run via 'load' event.
   If window is wider than total width of all slides function justifies slides without animation.
   Animation is percentage based.
@@ -16,7 +17,7 @@
 
   Future additions: Previous/Next buttons for desktop.
 
-  Variable:
+  Variable: (let box is used to prevent variable hoisting within 'for' and 'while' loops)
   box = the parent container block containing scrolling gallery
   s0 = basic slide
   sW = slide width
@@ -29,35 +30,42 @@
   sPosVis = current slide position in visible portion of box
   sPosPct = convert position to percent
 */
-// Image Slider 
-function imageSlider() {
-  var box = document.getElementById('image_slider');
-  var s0 = box.getElementsByTagName('div')[0];
+// Image Slider
+function sAnimate(box) {
+  var s0 = box.getElementsByTagName("div")[0];
   var sW = s0.offsetWidth;
   var sF = sW + parseInt(getComputedStyle(s0).marginRight);
-  var sArr = document.getElementsByClassName('image_slide');
-  function sAnimate() {
-    var boxW = box.offsetWidth;
-    var scrPos = box.scrollLeft;
-    if (sF * (sArr.length - 1) <= boxW ) {
-      image_slider.setAttribute('class','justified');
-    } else {
-      for (var i = 0; i < sArr.length; i++) {
-        var sPos = Math.round(sArr[i].offsetLeft + (sF / 2) );
-        var sPosVis = scrPos - sPos;
-        var sPosPct = Math.round((sPosVis / boxW) * 100);
-        sPosPct = sPosPct + 50;
-        sPosPct = sPosPct * 0.20; // slow image movement by reducing this %
-        sArr[i].getElementsByTagName('img')[0].style.transform = 'translateX(' + sPosPct + '%)';
-      }
+  var sArr = box.getElementsByClassName("image_slide");
+  var boxW = box.offsetWidth;
+  var scrPos = box.scrollLeft;
+  if (sF * (sArr.length - 1) <= boxW ) {
+    box.scrollLeft = 0;
+    box.setAttribute("class","image_slider justified");
+  } else {
+    box.setAttribute("class","image_slider");
+    for (var i = 0; i < sArr.length; i++) {
+      var sPos = Math.round(sArr[i].offsetLeft + (sF / 2) );
+      var sPosVis = scrPos - sPos;
+      var sPosPct = Math.round((sPosVis / boxW) * 100);
+      sPosPct = sPosPct + 50;
+      sPosPct = sPosPct * 0.20; // slow image movement by reducing this %
+      sArr[i].getElementsByTagName("img")[0].style.transform = "translateX(" + sPosPct + "%)";
     }
   }
-  box.addEventListener('scroll', sAnimate);
-  sAnimate();
+}
+function imageSlider() {
+  var allSliders = document.getElementsByClassName("image_slider");
+  for (var i = 0; i < allSliders.length; i++) {
+    let box = allSliders[i];
+    box.addEventListener("scroll", function() {
+      sAnimate(box);
+    });
+    sAnimate(box);
+  };
 }; //EOF
 //init slider
-window.addEventListener('load', imageSlider);
+window.addEventListener("load", imageSlider);
 //re-init slider
-window.addEventListener('resize', imageSlider);
-window.addEventListener('orientationchange', imageSlider);
+window.addEventListener("resize", imageSlider);
+window.addEventListener("orientationchange", imageSlider);
 // End Image Slider
