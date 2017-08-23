@@ -59,18 +59,25 @@ section {
   justify-content: center;
 }
 .image_slider .image_slide {
-  width: 200px;
-  height: 150px;
-  margin-right: 1em;
+  width: 33%;
+  height: 20%;
+  margin-right: 2%;
   border-radius: 1em;
   border: 1px solid gray;
   overflow: hidden;
   flex: 0 0 auto;
 }
-.image_slider .image_slide  img {
+.image_slider .image_slide img {
   /* negative margin matches amount over 100% / 2 */
   margin-left: -14%;
   width: 128%;
   height: auto;
+}
+@media screen and (min-width: 1224px) {
+  .image_slider .image_slide {
+    width: 400px;
+    height: auto;
+    margin-right: 24px;
+  }
 }
 /* End Image Slider */

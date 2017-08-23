@@ -38,13 +38,13 @@ function sAnimate(box) {
   var sArr = box.getElementsByClassName("image_slide");
   var boxW = box.offsetWidth;
   var scrPos = box.scrollLeft;
-  if (sF * (sArr.length - 1) <= boxW ) {
+  if (sF * (sArr.length - 1) <= boxW) {
     box.scrollLeft = 0;
     box.setAttribute("class","image_slider justified");
   } else {
     box.setAttribute("class","image_slider");
     for (var i = 0; i < sArr.length; i++) {
-      var sPos = Math.round(sArr[i].offsetLeft + (sF / 2) );
+      var sPos = Math.round(sArr[i].offsetLeft + (sW / 2) + (parseInt(getComputedStyle(s0).marginRight) / 2));
       var sPosVis = scrPos - sPos;
       var sPosPct = Math.round((sPosVis / boxW) * 100);
       sPosPct = sPosPct + 50;
