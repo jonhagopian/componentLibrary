@@ -1,7 +1,7 @@
 // See read me in styles.css
 /*
   READ ME
-  Multiple instances of slider may exist.
+  Multiple instances of slider may exist. Add css class 'image_slider' to gallery container.
   imageSlider() run via 'load' event.
   If window is wider than total width of all slides function justifies slides without animation.
   Animation is percentage based.
@@ -19,7 +19,7 @@
 
   Variable: (let box is used to prevent variable hoisting within 'for' and 'while' loops)
   box = the parent container block containing scrolling gallery
-  s0 = basic slide
+  s0 = current slide object
   sW = slide width
   sF = slide dimensions plus margin right
   sArr = array, all slides within the box
