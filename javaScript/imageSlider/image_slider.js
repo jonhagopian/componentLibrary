@@ -35,7 +35,7 @@ function sAnimate(box) {
   var s0 = box.getElementsByTagName("div")[0];
   var sW = s0.offsetWidth;
   var sF = sW + parseInt(getComputedStyle(s0).marginRight);
-  var sArr = box.getElementsByClassName("image_slide");
+  var sArr = box.querySelectorAll(".image_slide");
   var boxW = box.offsetWidth;
   var scrPos = box.scrollLeft;
   if (sF * (sArr.length - 1) <= boxW) {
@@ -49,14 +49,14 @@ function sAnimate(box) {
       var sPosPct = Math.round((sPosVis / boxW) * 100);
       sPosPct = sPosPct + 50;
       sPosPct = sPosPct * 0.20; // slow image movement by reducing this %
-      sArr[i].getElementsByTagName("img")[0].style.transform = "translateX(" + sPosPct + "%)";
+      sArr[i].querySelector("img").style.transform = "translateX(" + sPosPct + "%)";
     }
   }
 }
 function imageSlider() {
-  var allSliders = document.getElementsByClassName("image_slider");
+  var allSliders = document.querySelectorAll(".image_slider");
   for (var i = 0; i < allSliders.length; i++) {
-    let box = allSliders[i];
+    let box = allSliders[i]; // let won't allow value to be overwritten by each iteration
     box.addEventListener("scroll", function() {
       sAnimate(box);
     });
