@@ -63,11 +63,14 @@ section {
   margin-left: auto;
   margin-right: auto;
 }
+.image_slider::-webkit-scrollbar {
+  display: none;
+}
 .image_slider.justified {
   justify-content: center;
 }
 .image_slider .image_slide {
-  width: 40%;
+  width: 66%;
   height: auto;
   margin-right: 2%;
   border-radius: 1em;
