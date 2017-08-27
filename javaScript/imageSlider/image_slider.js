@@ -1,12 +1,12 @@
 /*
   READ ME
   Multiple instances of slider may exist. Add css class 'image_slider' to gallery container.
-  imageSlider() run via 'load' event.
+  Attach imageSlider() to load event.
   If window is wider than total width of all slides, script will justify slides without animation.
   Animation is percentage based.
 
-  current slide center, distance from SCROLLER container left side
-  current slide center, position IN CONTAINER
+  slide center, distance from SCROLLER container left side
+  slide center, position IN CONTAINER
   convert to percentage, this is the value to move images within slide right
   move image to center using 1/2 image width, 50%
 
@@ -16,10 +16,10 @@
 
   Future additions: Previous/Next buttons to clue user?
 
-  note: let not var, to prevent variable hoisting within loops
+  note: let not var, to prevent value from being replaced
   
   Collect Data--
-  allSlider = all gallery sliders in the document
+  allSliders = all gallery sliders in the document
   box = the parent container block that contains the scrolling gallery
   boxW = box width
   s0 = first slide, used to reference
@@ -27,10 +27,10 @@
   sMR = width of the margin used on each slide, currently margin right
   sF = width of the individual slide plus margin right
   sArr = array containing all slide objects within gallery
-  sOffsetArr = array passing the numeric offset of each slide
-  sImgArr = array passing each slides image object 
+  sOffsetArr = array containing the pixel offset of each slide
+  sImgArr = array containing each slides image object 
 
-  Calculate on Scroll for each slide--
+  Calculate on Scroll for each slide-- sAnimate()
   sPos = current slide position in box
   sPosVis = current slide position in visible portion of box
   sPosPct = convert position to percent, then apply to image
@@ -52,7 +52,7 @@ function imageSlider(firstRun) {
       var sPos = sOffsetArr[i] + ((sW+sMR) / 2);
       var sPosVis = scrPos - sPos;
       var sPosPct = (sPosVis / boxW) * 100;
-      sPosPct = sPosPct + 50;
+      sPosPct = sPosPct + 50; // plus 50% for center
       sPosPct = (sPosPct * 0.20).toFixed(2); // slow image movement by reducing this %
       sImgArr[i].style.transform = "translateX(" + sPosPct + "%)";
     }
