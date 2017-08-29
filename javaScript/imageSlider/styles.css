@@ -7,13 +7,12 @@
   html { overflow: hidden; } (safari bug fix),
   img { display: block; },
   copy & paste all CSS within 'Image Slider' comments
-
+  calc width - margin right
+  gallery CSS is for full window width, adjust media queries for use in narrower sections
   -webkit-overflow-scrolling: touch; 
   Momentum-based scrolling, where the content continues to scroll for a while after finishing the scroll gesture and removing your finger from the touchscreen.
-
   Adjust width and padding of '.image_slider'
     & height, width, border-radius, border, and margin-left of '.image_slider .image_slide'
-
   '.image_slider.justified' will justify center slides if screen is too wide for scroll, added via JS
 */
 
@@ -25,7 +24,7 @@ html {
 }
 body {
   font-family: sans-serif;
-  padding: 1em;
+  padding: 0;
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -69,27 +68,31 @@ section {
 .image_slider.justified {
   justify-content: center;
 }
-.image_slider .image_slide {
-  width: 66%;
+.image_slider figure {
+  width: calc(66.6% - 1em);
   height: auto;
-  margin-right: 2%;
+  margin-right: 1em;
   border-radius: 1em;
-  border: 1px solid gray;
   overflow: hidden;
   flex: 0 0 auto;
   position: relative;
 }
-.image_slider .image_slide img {
+.image_slider figure img {
   /* negative margin matches width amount over 100% / 2 */
   margin-left: -14%;
   width: 128%;
   height: auto;
 }
-@media screen and (min-width: 1224px) {
-  .image_slider .image_slide {
-    width: 400px;
+@media screen and (min-width: 48em) and (max-width: 76em) {
+  .image_slider figure {
+    width: calc(40% - 1em);
     height: auto;
-    margin-right: 24px;
+  }
+}
+@media screen and (min-width: 76em) {
+  .image_slider figure {
+    width: calc(22em - 1em);
+    height: auto;
   }
 }
 /* End Image Slider */
