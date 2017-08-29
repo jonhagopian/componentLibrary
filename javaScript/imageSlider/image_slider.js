@@ -66,9 +66,9 @@ function imageSlider(firstRun) {
     let sArr = box.querySelectorAll("figure");
     let sW = box.querySelector("figure").offsetWidth;
     let sOffsetArr = [];
-    sArr.forEach(function(item){
-      sOffsetArr.push(item.offsetLeft)
-    });
+    for (var i = 0; i < sArr.length; i++) {
+      sOffsetArr.push(sArr[i].offsetLeft);
+    }
     let sImgArr = box.querySelectorAll("figure img");
     // If screen is too wide, no slider
     if (box.scrollWidth <= boxW) {
