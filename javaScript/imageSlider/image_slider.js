@@ -8,13 +8,13 @@
   slide center, position IN CONTAINER
   convert to percentage, this is the value to move images within slide right
   move image to center using 1/2 image width, 50%
-  setTimout on resize to detect on resize complete
   To slow or speed image lag see: sPosPct = sPosPct * 0.20, 1 is full, 0 none
   Images should be large enough to fill lag distance within slide
   note: let not var, to prevent value from being replaced
+  event listeners: '_forEventListener' solves the issue of passing parameters and removing event
+    setting add/remove event in same block
   
   Future additions: Previous/Next buttons to clue user?
-    on resize event listener is added again, cannot use removeEventListener due to scope and arguments
 
   Collect Data--
   allSliders = all gallery sliders in the document
@@ -37,7 +37,6 @@
 // Image Gallery Slider
 function imageSlider(firstRun) {
   if (firstRun === true) {
-    // Re-init slider
     var resizeDone;
     window.addEventListener("resize", function() {
       clearTimeout(resizeDone);
@@ -48,19 +47,19 @@ function imageSlider(firstRun) {
     window.addEventListener("orientationchange", imageSlider);
   }
   function sAnimate(box, boxW, sW, sOffsetArr, sImgArr) {
-    console.log("animated");
     var scrPos = box.scrollLeft;
+    // for each individual image slide
     for (var i = 0; i < sOffsetArr.length; i++) {
       var sPos = sOffsetArr[i] + (sW / 2);
       var sPosVis = scrPos - sPos;
       var sPosPct = (sPosVis / boxW) * 100;
       sPosPct = sPosPct + 50; // plus 50% for center
-      sPosPct = (sPosPct * 0.20).toFixed(2); // slow image movement by reducing this %
+      sPosPct = (sPosPct * 0.20).toFixed(2); // change image movement lag by reducing the %
       sImgArr[i].style.transform = "translateX(" + sPosPct + "%)";
     }
   } //EOF
   var allSliders = document.querySelectorAll(".image_slider");
-  // For each individual slider 'section' element
+  // For each individual gallery
   for (var j = 0; j < allSliders.length; j++) {
     let box = allSliders[j];
     let boxW = box.offsetWidth;
@@ -71,7 +70,7 @@ function imageSlider(firstRun) {
       sOffsetArr.push(item.offsetLeft)
     });
     let sImgArr = box.querySelectorAll("figure img");
-    // If screen is too wide, no need to run slider
+    // If screen is too wide, no slider
     if (box.scrollWidth <= boxW) {
       box.setAttribute("class","image_slider justified");
       box.scrollLeft = 0;
@@ -80,8 +79,15 @@ function imageSlider(firstRun) {
       }
     } else {
       box.setAttribute("class","image_slider");
-      box.addEventListener("scroll", function() {
+      let _forEventListener = function() {
         sAnimate(box, boxW, sW, sOffsetArr, sImgArr);
+      }
+      box.addEventListener("scroll", _forEventListener);
+      window.addEventListener("resize", function() {
+        box.removeEventListener("scroll", _forEventListener)
+      });
+      window.addEventListener("orientationchange", function() {
+        box.removeEventListener("scroll", _forEventListener)
       });
       sAnimate(box, boxW, sW, sOffsetArr, sImgArr);
     }
