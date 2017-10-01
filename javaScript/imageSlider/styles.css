@@ -1,26 +1,9 @@
 @charset "UTF-8";
 
-/*
-  READ ME
-
-  USE: box-sizing: border-box;
-  html { overflow: hidden; } (safari bug fix),
-  img { display: block; },
-  copy & paste all CSS within 'Image Slider' comments
-  calc width - margin right
-  gallery CSS is for full window width, adjust media queries for use in narrower sections
-  -webkit-overflow-scrolling: touch; 
-  Momentum-based scrolling, where the content continues to scroll for a while after finishing the scroll gesture and removing your finger from the touchscreen.
-  Adjust width and padding of '.image_slider'
-    & height, width, border-radius, border, and margin-left of '.image_slider .image_slide'
-  '.image_slider.justified' will justify center slides if screen is too wide for scroll, added via JS
-*/
-
 /* General Styles */
 * {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;line-height:inherit;letter-spacing:inherit;list-style:none;text-decoration:none;}
 html {
   box-sizing: border-box;
-  overflow: hidden;
 }
 body {
   font-family: sans-serif;
@@ -35,33 +18,31 @@ img {
 section {
   margin: 1em 0;
 }
+#mainGallery {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+}
+@media only screen and (min-width: 767px) {
+  #mainGallery {
+    flex-flow: row;
+    justify-content: space-around;
+    height: calc(100vw - 2em);
+    padding: 1em 0;
+  }
+}
 /* End General Styles */
 
-/* Testing CSS * /
-.image_slider .image_slide::after {
-  content: "Test Center-";
-  text-align: right;
-  position: absolute;
-  top: 0px; 
-  left: 0px; 
-  width: 50%; 
-  height: 100%; 
-  border-right: 1px solid black;
-}
-/ * End Testing CSS */
-
-/* Image Slider */
-.image-slider-container {
-  position: relative;
-}
+/* ----------- Image Slider ----------- */
+/* Image Slider Mobile */
 .image-slider {
   width: 100%;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
   padding: 0;
   display: flex;
+  flex-direction: row;
   flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
   margin-left: auto;
   margin-right: auto;
 }
@@ -72,60 +53,42 @@ section {
   justify-content: center;
 }
 .image-slider figure {
-  width: calc(22em - 1em);
+  width: calc(66.6% - 1em);
   height: auto;
   margin-right: 1em;
   border-radius: 1em;
   overflow: hidden;
   flex: 0 0 auto;
-  position: relative;
 }
 .image-slider figure img {
   /* negative margin matches width amount over 100% / 2 */
-  margin-left: -14%;
   width: 128%;
-  height: auto;
+  margin-left: -14%;
 }
-.btn-slider {
-  display: none;
-}
-@media screen and (max-width: 48em) {
-  .image-slider figure {
-    width: calc(66.6% - 1em);
+/* End Image Slider Mobile */
+
+/* Begin Image Slider Desktop */
+@media only screen and (min-width: 767px) {
+  .image-slider {
+    overflow-y: scroll;
+    margin-top: 2em;
+    height: calc(100% - 2em);
+    flex-direction: column;
+    justify-content: flex-start;
   }
-} 
-@media screen and (min-width: 49em) and (max-width: 76em) {
-  .image-slider figure {
-    width: calc(40% - 1em);
-    height: auto;
-  }
-}
-@media screen and (min-width: 77em) {
-  .image-slider-container {
-    width: 400px;
-    display: block;
-    margin: 0 auto;
+  .image-slider::-webkit-scrollbar {
+    display: none;
   }
   .image-slider figure {
     width: 100%;
     height: auto;
+    margin-right: 0;
+    margin-bottom: 1em;
+    flex: 0 0 auto;
+    border-radius: 1em;
   }
-  .btn-slider {
-    display: block;
-    position: absolute;
-    width: 2em;
-    height: 2em;
-    background: gray;
-    top: 50%;
-    margin-top: -1em;
-    cursor: pointer;
-    z-index: 1;
-  }
-  .btn-slider-l {
-    left: -1em;
-  }
-  .btn-slider-r {
-    right: -1em;
+  .image-slider figure img {
+    /* Height calc via JS */
   }
 }
-/* End Image Slider */
+/* End  Image Slider Desktop */
