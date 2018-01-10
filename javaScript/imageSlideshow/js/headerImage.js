@@ -5,7 +5,7 @@
 
 function hdrImg() {
 
-	var xmlhttp = new XMLHttpRequest();
+	/*var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
 	    var hdrImgArray = JSON.parse(this.responseText);
@@ -13,9 +13,9 @@ function hdrImg() {
 	  }
 	};
 	xmlhttp.open("GET", "js/bannerImages.json", true);
-	xmlhttp.send();
+	xmlhttp.send();*/
 
-	/*var hdrImgArray = [
+	var hdrImgArray = [
 		"images/banff1.jpg",
 		"images/banff2.jpg",
 		"images/banff3.jpg",
@@ -24,7 +24,8 @@ function hdrImg() {
 		"images/banff6.jpg",
 		"images/banff7.jpg",
 		"images/banff8.jpg"
-	]*/
+	]
+  
 	function swapHdrImg() {
 		randomImg = hdrImgArray[Math.floor(Math.random() * hdrImgArray.length)];
 		newBannerImage = document.createElement("img");
