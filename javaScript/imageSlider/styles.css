@@ -35,8 +35,8 @@ section {
 
 /* ----------- Image Slider ----------- */
 /* Image Slider Mobile */
-.image-slider {
-  width: 100%;
+.img-parallax {
+  width: 80%;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
   padding: 0;
@@ -46,13 +46,13 @@ section {
   margin-left: auto;
   margin-right: auto;
 }
-.image-slider::-webkit-scrollbar {
+.img-parallax::-webkit-scrollbar {
   display: none;
 }
-.image-slider.justified {
+.img-parallax.justified {
   justify-content: center;
 }
-.image-slider figure {
+.img-parallax figure {
   width: calc(66.6% - 1em);
   height: auto;
   margin-right: 1em;
@@ -60,7 +60,7 @@ section {
   overflow: hidden;
   flex: 0 0 auto;
 }
-.image-slider figure img {
+.img-parallax figure img {
   /* negative margin matches width amount over 100% / 2 */
   width: 128%;
   margin-left: -14%;
@@ -69,17 +69,17 @@ section {
 
 /* Begin Image Slider Desktop */
 @media only screen and (min-width: 767px) {
-  .image-slider {
+  .img-parallax {
     overflow-y: scroll;
     margin-top: 2em;
     height: calc(100% - 2em);
     flex-direction: column;
     justify-content: flex-start;
   }
-  .image-slider::-webkit-scrollbar {
+  .img-parallax::-webkit-scrollbar {
     display: none;
   }
-  .image-slider figure {
+  .img-parallax figure {
     width: 100%;
     height: auto;
     margin-right: 0;
@@ -87,7 +87,7 @@ section {
     flex: 0 0 auto;
     border-radius: 1em;
   }
-  .image-slider figure img {
+  .img-parallax figure img {
     /* Height calc via JS */
   }
 }
